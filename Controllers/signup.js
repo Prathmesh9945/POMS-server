@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { User } = require('../Models/userScema');
+const User = require('../Models/userSchema');
+
 const bcryptjs = require('bcryptjs')
 const signupCtr = async (req, res) => {
     try {
@@ -12,7 +13,7 @@ const signupCtr = async (req, res) => {
         }
         const existingUsername = await User.findOne({ username });
         if (existingUsername) {
-            return res.status(409).json({ message: 'Username already taken, try a different one' });
+            return res.json({ message: 'Username already taken, try a different one' }).status(409);
         }
 
         const hashedPassword = await bcryptjs.hash(password,10)

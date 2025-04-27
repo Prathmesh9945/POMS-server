@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const PurchaseOrderSchema = new mongoose.Schema({
     poNumber:
     {
@@ -67,5 +69,5 @@ const PurchaseOrderSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const orderSchema = mongoose.Schema(orderSchemaOptions, { collection: 'orders' });
+const orderSchema = mongoose.Schema(PurchaseOrderSchema, { collection: 'orders' });
 module.exports = {orderSchema};
