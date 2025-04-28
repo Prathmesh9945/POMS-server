@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require("mongoose");
 
 const purchaseOrderSchema = new mongoose.Schema({
     poNumber: {
@@ -18,7 +18,7 @@ const purchaseOrderSchema = new mongoose.Schema({
                 ref: 'Item',
                 required: true,
             },
-            itemName: String, // For snapshot view
+            itemName: String, 
             quantity: {
                 type: Number,
                 required: true,
@@ -28,7 +28,7 @@ const purchaseOrderSchema = new mongoose.Schema({
                 required: true,
             },
             totalPrice: {
-                type: Number, // quantity * unitPrice
+                type: Number, 
                 required: true,
             },
         },
