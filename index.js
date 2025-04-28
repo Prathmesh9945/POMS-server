@@ -7,6 +7,7 @@ const cors = require('cors');
 
 const SignUpRoute = require('./Routes/Signup')
 const loginRoute = require('./Routes/Login')
+const PORoute = require('./Routes/PO')
 
 app.use(cors(
     "*"
@@ -14,6 +15,7 @@ app.use(cors(
 app.use(express.json())
 app.use('/auth/signup', SignUpRoute);
 app.use('/auth/login', loginRoute)
+app.use('/addpo', PORoute)
 
 
 app.get('/', (req, res) => {
