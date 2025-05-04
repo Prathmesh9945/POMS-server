@@ -8,6 +8,7 @@ const cors = require('cors');
 const SignUpRoute = require('./Routes/Signup')
 const loginRoute = require('./Routes/Login')
 const PurchaseOrderRoute = require('./Routes/prchaseOrder')
+const ProductRoute = require('./Routes/Product')
 
 app.use(cors(
     "*"
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use('/auth/signup', SignUpRoute);
 app.use('/auth/login', loginRoute);
 app.use('/purchaseOrder', PurchaseOrderRoute);
+app.use('/product', ProductRoute);
 
 
 app.get('/', (req, res) => {

@@ -1,124 +1,59 @@
-const ItemSchemas = new mongoose.Schema({
-    itemId:
-    {
+const mongoose = require("mongoose");
+
+const ProductsSchema = new mongoose.Schema({
+    itemId: {
         type: String,
         unique: true,
         required: true
     },
-
-    name:
-    {
+    name: {
         type: String,
         required: true
     },
-
-    description:
-    {
-        type: String
-    },
-
-    category:
-    {
+    description: String,
+    category: {
         type: String,
         required: true
     },
-
-    brand:
-    {
-        type: String
-    },
-
-    unitPrice:
-    {
+    brand: String,
+    unitPrice: {
         type: Number,
         required: true
     },
-
-    currency:
-    {
+    currency: {
         type: String,
         required: true
     },
-
-    discount:
-    {
+    discount: {
         type: Number,
         default: 0
     },
-
-    tax:
-    {
+    tax: {
         type: Number,
         default: 0
     },
-
-    quantityOrdered:
-    {
-        type: Number,
-        required: true
-    },
-
-    unitOfMeasure:
-    {
+    unitOfMeasure: {
         type: String,
         required: true
     },
-
-    minOrderQuantity:
-    {
-        type: Number
-    },
-
-    reorderLevel:
-    {
-        type: Number
-    },
-
-    preferredSupplier:
-    {
+    minOrderQuantity: Number,
+    reorderLevel: Number,
+    preferredSupplier: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Supplier'
     },
-
-    leadTime:
-    {
-        type: Number
-    },
-
-    warehouseLocation:
-    {
-        type: String
-    },
-
-    expectedDeliveryDate:
-    {
-        type: Date
-    },
-
-    packagingDetails:
-    {
-        type: String
-    },
-
-    warrantyPeriod:
-    {
-        type: String
-    },
-
-    returnPolicy:
-    {
-        type: String
-    },
-
-    inspectionRequired:
-    {
+    leadTime: Number,
+    warehouseLocation: String,
+    packagingDetails: String,
+    warrantyPeriod: String,
+    returnPolicy: String,
+    inspectionRequired: {
         type: Boolean,
         default: false
-
     },
-
-    attachments: [String]
+    attachments: [String] // URLs or filenames
 }, { timestamps: true });
 
-const ItemSchema = mongoose.model('User', userSchema);
-module.exports = {ItemSchema};
+const Product = mongoose.model("Product", ProductsSchema);
+
+module.exports = { Product }

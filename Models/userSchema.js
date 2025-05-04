@@ -44,6 +44,19 @@ const UserSchema = new mongoose.Schema({
         default: 'user',
         required: true,
     },
+    createdBy: {
+        type: String,
+        default:'devs'
+    },
+    status: {
+        type: String,
+        enum: ["Active", "Inactive"],
+        default: "Active"
+    },
+    IsVerified: {
+        type: Boolean,
+        default: false
+    }
 }, { timestamps: true }
 );
 

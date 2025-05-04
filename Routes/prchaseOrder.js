@@ -1,6 +1,8 @@
 const router = require("express").Router();
-const { purchaseOrderCtr} = require('../Controllers/purchaseOrder');
+const { purchaseOrderCtr, getPurchaseOrderCtr } = require('../Controllers/purchaseOrder');
 
-router.post('/' ,  purchaseOrderCtr);
+router.post('/', purchaseOrderCtr);
+
+router.get("/", getPurchaseOrderCtr);
 
 module.exports = router;

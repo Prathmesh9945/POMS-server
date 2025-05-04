@@ -4,80 +4,87 @@ const purchaseOrderSchema = new mongoose.Schema({
     poNumber: {
         type: String,
         required: true,
-        unique: true,
+        unique: true
     },
     supplier: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Supplier',
-        required: true,
+        required: true
     },
     items: [
         {
             item: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Item',
-                required: true,
+                required: true
             },
-            itemName: String, 
+            itemName: String,
             quantity: {
                 type: Number,
-                required: true,
+                required: true
             },
             unitPrice: {
                 type: Number,
-                required: true,
+                required: true
             },
-            totalPrice: {
-                type: Number, 
-                required: true,
-            },
-        },
+            totalPrice: Number // usually: quantity * unitPrice
+        }
     ],
     totalAmount: {
         type: Number,
-        required: true,
+        required: true
+    },
+    tax: {
+        type: Number,
+        default: 0
+    },
+    discount: {
+        type: Number,
+        default: 0
+    },
+    shippingCharges: {
+        type: Number,
+        default: 0
+    },
+    paid: {
+        type: Number
+    },
+    paymentStatus: {
+        type: String,
+        enum: ["Paid", "Unpaid", "Partial"]
     },
     status: {
         type: String,
+        default: "Pending Approval",
         enum: [
             'Pending Approval',
             'Approved',
             'Rejected',
             'Confirmed',
             'Received',
-            'Closed',
-        ],
-        default: 'Pending Approval',
+            'Closed'
+        ]
     },
-    expectedDeliveryDate: {
-        type: Date,
-    },
+    expectedDeliveryDate: Date,
     notes: String,
-
     createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+        type: String, // or mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
-
     approvedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'User'
     },
     approvedAt: Date,
-
     rejectedBy: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'User'
     },
     rejectedAt: Date,
     rejectedReason: String,
-
     confirmedAt: Date,
     receivedAt: Date,
-    closedAt: Date,
-}, {
-    timestamps: true,
-});
+    closedAt: Date
+}, { timestamps: true });
 
-export default mongoose.models.PurchaseOrder || mongoose.model('PurchaseOrder', purchaseOrderSchema);
+module.exports = mongoose.model("PurchaseOrder", purchaseOrderSchema);
