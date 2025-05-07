@@ -1,73 +1,90 @@
 const mongoose = require("mongoose");
 
-const PurchaseOrderSchema = new mongoose.Schema({
-    poNumber:
-    {
+const purchaseOrderSchema = new mongoose.Schema({
+    poNumber: {
         type: String,
-        unique: true,
-        required: true
+        required: true,
+        unique: true
     },
-
-    supplier:
-    {
-        type: mongoose.Schema.Types.ObjectId,
+    supplier: {
+        type: String,
         ref: 'Supplier',
         required: true
     },
-
-    items: [{
-        item:
+    items: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Item',
-            required: true
-        },
-        quantity:
-        {
-            type: Number,
-            required: true
-        },
-        unitPrice:
-        {
-            type: Number,
-            required: true
-        },
-        totalCost:
-        {
-            type: Number,
-            required: true
+            item: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Item',
+                required: true
+            },
+            itemName: String,
+            quantity: {
+                type: Number,
+                required: true
+            },
+            unitPrice: {
+                type: Number,
+                required: true
+            },
+            totalPrice: Number // usually: quantity * unitPrice
         }
-    }],
-
-    deliveryAddress:
-    {
-        type: String,
+    ],
+    totalAmount: {
+        type: Number,
         required: true
     },
-
-    paymentTerms:
-    {
+    tax: {
+        type: Number,
+        default: 0
+    },
+    discount: {
+        type: Number,
+        default: 0
+    },
+    shippingCharges: {
+        type: Number,
+        default: 0
+    },
+    paid: {
+        type: Number
+    },
+    paymentStatus: {
         type: String,
-        required: true
+        enum: ["Paid", "Unpaid", "Partial"]
     },
-
-    status:
-    {
+    status: {
         type: String,
-        enum: ['Pending', 'Approved', 'Shipped', 'Delivered', 'Closed'],
-        default: 'Pending'
+        default: "Pending Approval",
+        enum: [
+            'Pending Approval',
+            'Approved',
+            'Rejected',
+            'Confirmed',
+            'Received',
+            'Closed'
+        ]
     },
-
-    expectedDeliveryDate:
-    {
-        type: Date
+    expectedDeliveryDate: Date,
+    notes: String,
+    createdBy: {
+        type: String, // or mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     },
-
-    notes:
-    {
-        type: String
-    }
+    approvedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    approvedAt: Date,
+    rejectedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    rejectedAt: Date,
+    rejectedReason: String,
+    confirmedAt: Date,
+    receivedAt: Date,
+    closedAt: Date
 }, { timestamps: true });
 
-const orderSchema = mongoose.Schema(PurchaseOrderSchema, { collection: 'orders' });
-module.exports = {orderSchema};
+module.exports = mongoose.model("PurchaseOrder", purchaseOrderSchema);
