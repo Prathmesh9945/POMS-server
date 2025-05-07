@@ -87,4 +87,5 @@ const purchaseOrderSchema = new mongoose.Schema({
     closedAt: Date
 }, { timestamps: true });
 
-module.exports = mongoose.model("PurchaseOrder", purchaseOrderSchema);
+const PurchaseOrder = mongoose.model("PurchaseOrder", purchaseOrderSchema);
+module.exports = {PurchaseOrder}
