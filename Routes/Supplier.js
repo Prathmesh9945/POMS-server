@@ -1,9 +1,22 @@
 const router = require("express").Router();
-const supplierCtr = require('../Controllers/supplierCtr');
+
+const {
+  supplierCtr,
+  getSupplierCtr,
+  getSupplierByIdCtr,
+  updateSupplierByIdCtr,
+  deleteSupplierByIdCtr,
+  insertManySuppliersCtr,
+  deactivateSupplierById
+
+} = require('../Controllers/supplierCtr');
 
 router.post('/', supplierCtr);
 router.get('/', getSupplierCtr);
-router.put('/', supplierCtr.updateSupplierCtr);
-router.delete('/', supplierCtr.deleteSupplierByIdCtr)
+router.put('/:id', getSupplierByIdCtr);
+router.delete('/', deleteSupplierByIdCtr);
+router.patch('/:id', updateSupplierByIdCtr);
+router.post('/insert-many', insertManySuppliersCtr);
+router.put('/deactivate/:id' , deactivateSupplierById)
 
 module.exports = router;

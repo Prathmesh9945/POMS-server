@@ -3,6 +3,7 @@ const Supplier = require('../Models/supplierSchema');
 const supplierCtr = async (req, res) => {
   try {
     const {
+
       name,
       businessType,
       address,
@@ -14,11 +15,12 @@ const supplierCtr = async (req, res) => {
       paymentTerms,
       currencyUsed,
       compliance,
-      performanceMetrics
+      performanceMetrics,
+      status
     } = req.body;
 
     function generateSupplierId() {
-      const prefix = "SKU";
+      const prefix = "SLR";
       const date = new Date();
       const datePart = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`;
       const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -40,7 +42,8 @@ const supplierCtr = async (req, res) => {
       paymentTerms,
       currencyUsed,
       compliance,
-      performanceMetrics
+      performanceMetrics,
+      status
     };
 
     const savedSupplier = await Supplier.create(newSupplier);
@@ -79,7 +82,7 @@ const getSupplierByIdCtr = async (req, res) => {
   }
 };
 
-const updateSupplierCtr = async (req, res) => {
+const updateSupplierByIdCtr = async (req, res) => {
   try {
     const id = req.params.id;
     const updatedSupplier = await Supplier.findByIdAndUpdate(id, req.body, { new: true });
@@ -105,12 +108,65 @@ const deleteSupplierByIdCtr = async (req, res) => {
   }
 };
 
+const insertManySuppliersCtr = async (req, res) => {
+  try {
+    function generateSupplierId() {
+      const prefix = "SLR";
+      const date = new Date();
+      const datePart = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`;
+      const randomPart = Math.random().toString(36).substring(2, 8).toUpperCase();
+      return `${prefix}-${datePart}-${randomPart}`;
+    }
+
+    const suppliers = req.body;
+
+
+    const suppliersWithIds = suppliers.map(supplier => ({
+      ...supplier,
+      supplierId: generateSupplierId()
+    }));
+
+    const result = await Supplier.insertMany(suppliersWithIds);
+    res.status(201).json({ message: 'Suppliers inserted successfully', data: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error inserting suppliers', error: error.message });
+  }
+};
+
+
+const deactivateSupplierById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const supplier = await Supplier.findById(id);
+
+    if (!supplier) {
+      return res.status(404).json({ message: "Supplier not found" });
+    }
+
+    const isActive = !supplier.isActive;
+    const status = isActive ? "Active" : "Inactive";
+
+    const updatedSupplier = await Supplier.findByIdAndUpdate(id, { isActive }, { new: true });
+
+    supplier.active = false; // Assuming there's an 'active' field for status
+    await supplier.save();
+
+    res.status(200).json({ message: "Supplier deactivated successfully", supplier });
+  } catch (error) {
+    console.error("Error deactivating supplier:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 
 module.exports = {
   supplierCtr,
   getSupplierCtr,
   getSupplierByIdCtr,
-  updateSupplierCtr,
-  deleteSupplierByIdCtr
+  updateSupplierByIdCtr,
+  deleteSupplierByIdCtr,
+  insertManySuppliersCtr,
+  deactivateSupplierById
 };
