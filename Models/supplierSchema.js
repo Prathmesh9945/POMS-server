@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
-const SupplierSchema = new mongoose.Schema({
+const supplierSchema = new mongoose.Schema({
   supplierId:
   {
     type: String,
-    unique: true,
     required: true
   },
 
@@ -17,7 +16,6 @@ const SupplierSchema = new mongoose.Schema({
   businessType:
   {
     type: String,
-    enum: ['Manufacturer', 'Wholesaler', 'Distributor', 'Service Provider'],
     required: true
   },
 
@@ -33,22 +31,21 @@ const SupplierSchema = new mongoose.Schema({
     required: true
   },
 
-  phone:
+  phone: 
   {
     type: String,
     required: true
   },
 
-  email:
+  email: 
   {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
 
   website:
   {
-    type: String
+    type: String,
   },
 
   taxId:
@@ -57,38 +54,41 @@ const SupplierSchema = new mongoose.Schema({
     required: true
   },
 
-  bankDetails: {
-    accountNumber: String,
-    bankName: String,
-    swiftCode: String
-  },
-
   paymentTerms:
   {
     type: String,
-    enum: ['Advance', 'Net 30', 'Net 60', 'Credit'],
     required: true
+
   },
 
-  currencyUsed:
+  currencyUsed: 
   {
     type: String,
     required: true
   },
 
-  compliance: {
-    businessLicenseNumber: String,
-    isoCertifications: [String],
-    insuranceDetails: String
+  compliance:
+  {
+    type: String,
+    required: true
   },
 
-  performanceMetrics: {
-    avgDeliveryTime: Number,
-    orderFulfillmentRate: Number,
-    defectReturnRate: Number,
-    rating: Number
+  performanceMetrics: 
+  {
+    type: String,
+    required: true
+  },
+  
+  status: 
+  {
+    type: String,
+  },
+
+  isActive:
+  {
+    type:Boolean,
+    default: true
   }
 }, { timestamps: true });
 
-const Supplier = mongoose.model('Supplier', SupplierSchema);
-module.exports = { Supplier };
+module.exports = mongoose.model('Supplier', supplierSchema);

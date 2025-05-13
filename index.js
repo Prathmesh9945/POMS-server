@@ -21,16 +21,14 @@ app.use('/auth/signup', SignUpRoute);
 app.use('/auth/login', loginRoute);
 app.use('/purchaseOrder', PurchaseOrderRoute);
 app.use('/product', ProductRoute);
-
+app.use('/supplier', SupplierRoute);  
 
 app.get('/', (req, res) => {
-    return res.send("Welcome to POMS Server")
-})
+    return res.send("Welcome to POMS Server");
+});
 
 app.listen(PORT, () => {
-    console.log(`Server is running ${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
+});
 
-})
 ConnectDB();
-
-
