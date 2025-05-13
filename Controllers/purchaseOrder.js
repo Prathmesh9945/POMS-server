@@ -13,10 +13,12 @@ const purchaseOrderCtr = async (req, res) => {
             return `${prefix}${datePart}-${randomPart}`;
         }
 
+
+        const newItem = items.push(items);
         const newPurchaseOrder = {
             poNumber: generateOrderId(),
             supplier,
-            items,
+            items: newItem,
             deliveryAddress,
             paymentTerms,
             totalAmount,
@@ -24,8 +26,8 @@ const purchaseOrderCtr = async (req, res) => {
             discount,
             shippingCharges,
             createdBy,
-            status,
-            expectedDeliveryDate,
+            status: status || 'Pending Approval',
+            expectedDeliveryDate: new Date(expectedDeliveryDate),
             notes: remark
         }
         const purchaseOdr = await PurchaseOrder.create(newPurchaseOrder);

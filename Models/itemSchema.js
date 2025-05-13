@@ -51,7 +51,7 @@ const ProductsSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    attachments: [String] // URLs or filenames
+    attachments: [String]
 }, { timestamps: true });
 
 const Product = mongoose.model("Product", ProductsSchema);

@@ -27,7 +27,7 @@ const purchaseOrderSchema = new mongoose.Schema({
                 type: Number,
                 required: true
             },
-            totalPrice: Number // usually: quantity * unitPrice
+            totalPrice: Number 
         }
     ],
     totalAmount: {

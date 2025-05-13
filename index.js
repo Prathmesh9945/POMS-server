@@ -4,15 +4,18 @@ require('dotenv').config();
 const { ConnectDB } = require('./Config/ConnectDB');
 const PORT = process.env.PORT || 3001;
 const cors = require('cors');
-
+const cookieParser = require('cookie-parser')
+const { verifyUser} = require('./Middleware/authMiddleware')
 const SignUpRoute = require('./Routes/Signup')
 const loginRoute = require('./Routes/Login')
 const PurchaseOrderRoute = require('./Routes/prchaseOrder')
 const ProductRoute = require('./Routes/Product')
 
-app.use(cors(
-    "*"
-));
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
+app.use(cookieParser());
 app.use(express.json())
 app.use('/auth/signup', SignUpRoute);
 app.use('/auth/login', loginRoute);
