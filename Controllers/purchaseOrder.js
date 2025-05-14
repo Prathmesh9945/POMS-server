@@ -1,8 +1,8 @@
 const { PurchaseOrder } = require('../Models/purchaseOrderItemSchema');
 const purchaseOrderCtr = async (req, res) => {
     try {
-        const { poNumber, supplier, poDate, totalAmount, items, deliveryAddress, paymentTerms, status, createdBy, tax, discount, expectedDeliveryDate, shippingCharges, remark } = req.body;
-        console.log(poNumber, supplier, poDate, totalAmount, items, deliveryAddress, paymentTerms, status, createdBy, tax, discount, expectedDeliveryDate, shippingCharges, remark);
+        const { poNumber, supplier, poDate,  paidAmount,totalAmount, paymentStatus,items, deliveryAddress, paymentTerms, status, createdBy, tax, discount, expectedDeliveryDate, shippingCharges, remark } = req.body;
+        console.log(poNumber, supplier, poDate, paidAmount,paymentStatus, totalAmount, items, deliveryAddress, paymentTerms, status, createdBy, tax, discount, expectedDeliveryDate, shippingCharges, remark);
         console.log(req.body)
 
         function generateOrderId() {
@@ -13,17 +13,17 @@ const purchaseOrderCtr = async (req, res) => {
             return `${prefix}${datePart}-${randomPart}`;
         }
 
-
-        const newItem = items.push(items);
         const newPurchaseOrder = {
             poNumber: generateOrderId(),
             supplier,
-            items: newItem,
+            items,
             deliveryAddress,
             paymentTerms,
             totalAmount,
             tax,
             discount,
+            paid: paidAmount,
+            paymentStatus,
             shippingCharges,
             createdBy,
             status: status || 'Pending Approval',

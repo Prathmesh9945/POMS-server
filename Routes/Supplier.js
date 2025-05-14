@@ -17,6 +17,6 @@ router.put('/:id', getSupplierByIdCtr);
 router.delete('/', deleteSupplierByIdCtr);
 router.patch('/:id', updateSupplierByIdCtr);
 router.post('/insert-many', insertManySuppliersCtr);
-router.put('/deactivate/:id' , deactivateSupplierById)
+router.put('/deactivate/:id', deactivateSupplierById)
 
 module.exports = router;

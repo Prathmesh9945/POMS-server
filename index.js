@@ -10,6 +10,7 @@ const SignUpRoute = require('./Routes/Signup')
 const loginRoute = require('./Routes/Login')
 const PurchaseOrderRoute = require('./Routes/prchaseOrder')
 const ProductRoute = require('./Routes/Product')
+const SupplierRoute =require('./Routes/Supplier')
 
 app.use(cors({
     origin: 'http://localhost:3000',

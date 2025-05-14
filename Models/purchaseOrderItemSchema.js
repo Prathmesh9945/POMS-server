@@ -7,14 +7,15 @@ const purchaseOrderSchema = new mongoose.Schema({
         unique: true
     },
     supplier: {
-        type: String,
-        ref: 'Supplier',
-        required: true
+        id: { type: String, required: true },
+        name: { type: String, required: true },
+        email: { type: String, required: true },
+        supplierId: { type: String, required: true },
     },
     items: [
         {
-            item: {
-                type: mongoose.Schema.Types.ObjectId,
+            itemObjID: {
+                type: String,
                 ref: 'Item',
                 required: true
             },
@@ -27,7 +28,9 @@ const purchaseOrderSchema = new mongoose.Schema({
                 type: Number,
                 required: true
             },
-            totalPrice: Number 
+            discount: Number,
+            tax: Number,
+            totalPrice: Number
         }
     ],
     totalAmount: {
@@ -88,4 +91,4 @@ const purchaseOrderSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const PurchaseOrder = mongoose.model("PurchaseOrder", purchaseOrderSchema);
-module.exports = {PurchaseOrder}
+module.exports = { PurchaseOrder }
